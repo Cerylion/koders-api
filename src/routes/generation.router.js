@@ -54,6 +54,28 @@ router.post('/', async (request, response) => {
   }
 })
 
+router.patch('/:id', async (request, response) => {
+  try {
+    const { id } = request.params
+    const generation = request.body
+    const updateGen = await generationUsecase.updateById(id, generation)
+
+    response.json({
+      success: true,
+      message: "Generation updated",
+      data: {
+        generation: updateGen
+      }
+    })
+  } catch (error) {
+    response.status(error.status || 500)
+    response.json({
+      success: false,
+      error: error.message
+    })
+  }
+})
+
 router.delete('/:id', async (request, response) => {
   try {
     const { id } = request.params

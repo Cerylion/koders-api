@@ -2,11 +2,13 @@ const createError = require('http-errors')
 const Generations = require('../models/generations.model')
 
 async function create(generationData) {
-  const generationFound = await Koders.findOne({ generation: generationData.generation })
+  const generationFound = await Generations.findOne({ 
+    generation: generationData.generation,
+    program: generationData.program })
 
   if (generationFound) {
     // throw new Error('Generation already exists')
-    throw createError(409, 'Email already in use')
+    throw createError(409, 'Generation already exists')
   }
 
   const newGeneration = await Generations.create(generationData)
